@@ -1,5 +1,5 @@
 window.WEIGHT_LOG_CONFIG = {
-  OWNER: "YOUR_GITHUB_USERNAME",
-  REPO: "weight-log",
+  OWNER: "ben-davidson-6",
+  REPO: "liftlog",
   BRANCH: "main",
 };
