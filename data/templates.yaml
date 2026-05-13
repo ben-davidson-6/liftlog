@@ -1,0 +1,27 @@
+- slug: push
+  name: Push (Bench)
+  exercises:
+    - bench_press
+    - incline_dumbbell
+    - lateral_raise
+    - tricep_dip
+- slug: pull
+  name: Pull (Row)
+  exercises:
+    - supported_row
+    - pull_up
+    - lat_pulldown
+    - bicep_curl
+- slug: legs
+  name: Legs (Deadlift)
+  exercises:
+    - deadlift
+    - rdl
+    - knee_tuck
+- slug: ohp
+  name: OHP
+  exercises:
+    - overhead_press
+    - seated_db_ohp
+    - lateral_raise
+    - face_pull

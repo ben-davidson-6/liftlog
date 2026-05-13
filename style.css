@@ -185,3 +185,35 @@ button:disabled {
 .stack > * + * { margin-top: 12px; }
 
 .hidden { display: none !important; }
+
+.exercise-block {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.exercise-block .ex-heading {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+.exercise-block .last-session {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+.exercise-block .sets-container { margin-bottom: 8px; }
+.exercise-block .add-set-btn {
+  min-height: 36px;
+  padding: 6px 12px;
+  width: auto;
+}
+
+.link-remove {
+  background: transparent;
+  color: var(--danger);
+  border: none;
+  padding: 0 0 0 8px;
+  min-height: auto;
+  width: auto;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}

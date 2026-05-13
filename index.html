@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#2563eb">
-  <title>weight-log</title>
+  <title>liftlog</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main>
-  <h1>weight-log</h1>
+  <h1>liftlog</h1>
   <nav>
     <a href="index.html" class="active">Log</a>
     <a href="charts.html">Charts</a>
@@ -55,13 +55,44 @@
         <input id="workout-date" type="date">
       </div>
       <div class="field">
-        <label for="exercise-select">Exercise</label>
-        <select id="exercise-select"></select>
+        <label for="workout-mode">Start</label>
+        <select id="workout-mode">
+          <option value="">— choose —</option>
+        </select>
       </div>
-      <div class="field">
-        <button class="secondary" id="add-exercise-btn">+ Add new exercise</button>
+
+      <div id="workout-body"></div>
+
+      <div id="log-workout-wrap" class="hidden" style="margin-top: 16px;">
+        <button id="log-workout">Log workout</button>
       </div>
-      <div id="add-exercise-form" class="field hidden stack">
+      <div id="workout-status" class="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>Templates</h2>
+      <div id="templates-list" class="entries"></div>
+      <button class="secondary" id="manage-templates-btn" style="margin-top: 12px;">+ New template</button>
+      <div id="new-template-form" class="field hidden stack" style="margin-top: 12px;">
+        <input id="new-template-name" type="text" placeholder="Template name (e.g. Push B)">
+        <label>Exercises (in order — tap to add)</label>
+        <div id="new-template-picked" class="entries muted"><em>none yet</em></div>
+        <select id="new-template-exercise-picker"></select>
+        <div class="row">
+          <button class="secondary" id="add-exercise-to-template">+ Add exercise</button>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+          <button id="save-template">Save template</button>
+          <button class="secondary" id="cancel-template">Cancel</button>
+        </div>
+        <div id="new-template-status" class="status"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Exercises</h2>
+      <button class="secondary" id="add-exercise-btn">+ Add new exercise</button>
+      <div id="add-exercise-form" class="field hidden stack" style="margin-top: 12px;">
         <input id="new-exercise-name" type="text" placeholder="e.g. Romanian Deadlift">
         <div class="row">
           <button id="confirm-add-exercise">Add</button>
@@ -69,28 +100,6 @@
         </div>
         <div id="add-exercise-status" class="status"></div>
       </div>
-
-      <label>Sets</label>
-      <div id="sets-container"></div>
-      <button class="secondary" id="add-set">+ Add set</button>
-
-      <div style="margin-top: 16px;">
-        <button id="log-workout">Log workout</button>
-      </div>
-      <div id="workout-status" class="status"></div>
-    </div>
-
-    <div class="card">
-      <h2>Recent</h2>
-      <div class="field">
-        <label>Weights</label>
-        <div id="recent-weights" class="entries"><span class="muted">Loading…</span></div>
-      </div>
-      <div class="field">
-        <label>Workouts</label>
-        <div id="recent-workouts" class="entries"><span class="muted">Loading…</span></div>
-      </div>
-      <button class="secondary" id="refresh-recent">Refresh</button>
     </div>
 
     <div class="card">
