@@ -4,14 +4,19 @@
 
   function getToken() { return localStorage.getItem("gh_token"); }
 
+  function b64decode(s) {
+    return decodeURIComponent(escape(atob(s.replace(/\n/g, ""))));
+  }
+
   async function fetchFile(path) {
     const token = getToken();
-    const headers = { Accept: "application/vnd.github.raw" };
+    const headers = { Accept: "application/vnd.github+json" };
     if (token) headers.Authorization = `Bearer ${token}`;
     const url = `https://api.github.com/repos/${cfg.OWNER}/${cfg.REPO}/contents/${path}?ref=${cfg.BRANCH}`;
-    const r = await fetch(url, { headers });
+    const r = await fetch(url, { headers, cache: "no-store" });
     if (!r.ok) throw new Error(`${path}: ${r.status}`);
-    return r.text();
+    const j = await r.json();
+    return b64decode(j.content);
   }
 
   function parseCSV(text) {

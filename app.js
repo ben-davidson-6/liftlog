@@ -62,6 +62,7 @@
         Authorization: `Bearer ${getToken()}`,
         Accept: "application/vnd.github+json",
       },
+      cache: "no-store",
     });
     if (!r.ok) throw new Error(`GET ${path}: ${r.status} ${await r.text()}`);
     const j = await r.json();
