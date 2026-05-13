@@ -134,14 +134,26 @@
       byDate.get(r.date).push(r);
     }
     const dates = [...byDate.keys()].sort();
+    const epley = (w, r) => w * (1 + r / 30);
     const data = dates.map((d) => {
       const sets = byDate.get(d);
       if (metric === "top_weight") return Math.max(...sets.map((s) => s.weight_kg));
+      if (metric === "e1rm") {
+        const candidates = sets
+          .filter((s) => s.weight_kg > 0 && s.reps > 0)
+          .map((s) => epley(s.weight_kg, s.reps));
+        if (candidates.length === 0) return null;
+        return Math.round(Math.max(...candidates) * 10) / 10;
+      }
       return sets.reduce((sum, s) => sum + s.weight_kg * s.reps, 0);
     });
 
     if (exerciseChart) exerciseChart.destroy();
-    const label = metric === "top_weight" ? "Top-set weight (kg)" : "Volume (kg·reps)";
+    const label =
+      metric === "top_weight" ? "Top-set weight (kg)" :
+      metric === "e1rm" ? "Estimated 1RM (kg)" :
+      "Volume (kg·reps)";
+    const yUnit = metric === "volume" ? "kg·reps" : "kg";
     exerciseChart = new Chart($("exercise-chart"), {
       type: "line",
       data: {
@@ -155,7 +167,7 @@
           pointRadius: 3,
         }],
       },
-      options: baseOptions(metric === "top_weight" ? "kg" : "kg·reps"),
+      options: baseOptions(yUnit),
     });
   }
 
