@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <title>weight-log · charts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Charts</h1>
+  <nav>
+    <a href="index.html">Log</a>
+    <a href="charts.html" class="active">Charts</a>
+  </nav>
+
+  <section id="setup-msg" class="card hidden">
+    <p>No token saved on this device. Charts read public files from the repo, but private repos require a token. <a href="index.html">Go to setup →</a></p>
+  </section>
+
+  <div class="card">
+    <h2>Weight</h2>
+    <div class="chart-container"><canvas id="weight-chart"></canvas></div>
+    <div id="weight-status" class="status"></div>
+  </div>
+
+  <div class="card">
+    <h2>Exercise</h2>
+    <div class="field">
+      <label for="exercise-picker">Exercise</label>
+      <select id="exercise-picker"></select>
+    </div>
+    <div class="field">
+      <label for="metric-picker">Metric</label>
+      <select id="metric-picker">
+        <option value="top_weight">Top-set weight (kg)</option>
+        <option value="volume">Total volume (kg × reps)</option>
+      </select>
+    </div>
+    <div class="chart-container"><canvas id="exercise-chart"></canvas></div>
+    <div id="exercise-status" class="status"></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script src="config.js"></script>
+<script src="chart.js"></script>
+</body>
+</html>

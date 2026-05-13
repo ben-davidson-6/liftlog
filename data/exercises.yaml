@@ -1,0 +1,10 @@
+- slug: bench_press
+  name: Bench Press
+- slug: squat
+  name: Back Squat
+- slug: deadlift
+  name: Deadlift
+- slug: overhead_press
+  name: Overhead Press
+- slug: barbell_row
+  name: Barbell Row
