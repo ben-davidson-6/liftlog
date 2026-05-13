@@ -1,10 +1,50 @@
 - slug: bench_press
   name: Bench Press
-- slug: squat
-  name: Back Squat
-- slug: deadlift
-  name: Deadlift
+- slug: incline_dumbbell
+  name: Incline Dumbbell Press
+- slug: lateral_raise
+  name: Lateral Raise
+- slug: tricep_dip
+  name: Tricep Dip
+- slug: chest_press_machine
+  name: Chest Press Machine
+- slug: cable_tricep
+  name: Cable Tricep Pushdown
+- slug: supported_row
+  name: Chest-Supported Row
+- slug: pull_up
+  name: Pull Up
+- slug: cable_row
+  name: Seated Cable Row
+- slug: lat_pulldown
+  name: Lat Pulldown
+- slug: ez_bar_curl
+  name: EZ Bar Curl
+- slug: bicep_curl
+  name: Dumbbell Bicep Curl
 - slug: overhead_press
   name: Overhead Press
+- slug: seated_db_ohp
+  name: Seated DB OHP
+- slug: face_pull
+  name: Face Pull
+- slug: leg_raise
+  name: Leg Raise
+- slug: dead_bug
+  name: Dead Bug
+- slug: deadlift
+  name: Deadlift
+- slug: knee_tuck
+  name: Knee Tuck
+- slug: rdl
+  name: Romanian Deadlift
 - slug: barbell_row
   name: Barbell Row
+- slug: machine_row
+  name: Machine Row
+- slug: hamstring_curl
+  name: Hamstring Curl
+- slug: reverse_grip_row
+  name: Reverse Grip Row
+- slug: squat
+  name: Back Squat
