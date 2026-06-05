@@ -56,6 +56,22 @@
 
   // ---------- weight chart ----------
 
+  // Trailing moving average over a window of calendar days. Using a date
+  // window (rather than a fixed number of points) keeps the average honest
+  // when there are gaps between weigh-ins.
+  function trailingMovingAverage(dates, values, windowDays) {
+    const MS_PER_DAY = 86400000;
+    const ts = dates.map((d) => new Date(d + "T00:00:00").getTime());
+    return values.map((_, i) => {
+      const cutoff = ts[i] - (windowDays - 1) * MS_PER_DAY;
+      let sum = 0, n = 0;
+      for (let j = i; j >= 0 && ts[j] >= cutoff; j--) {
+        if (Number.isFinite(values[j])) { sum += values[j]; n++; }
+      }
+      return n ? Math.round((sum / n) * 10) / 10 : null;
+    });
+  }
+
   async function renderWeight() {
     try {
       const text = await fetchFile("data/weight.csv");
@@ -67,18 +83,33 @@
         $("weight-status").textContent = "No weight entries yet.";
         return;
       }
+      const AVG_DAYS = 7;
+      const avg = trailingMovingAverage(labels, data, AVG_DAYS);
       new Chart($("weight-chart"), {
         type: "line",
         data: {
           labels,
-          datasets: [{
-            label: "Weight (kg)",
-            data,
-            borderColor: "#2563eb",
-            backgroundColor: "rgba(37,99,235,0.1)",
-            tension: 0.2,
-            pointRadius: 3,
-          }],
+          datasets: [
+            {
+              label: `${AVG_DAYS}-day average (kg)`,
+              data: avg,
+              borderColor: "#2563eb",
+              backgroundColor: "rgba(37,99,235,0.1)",
+              tension: 0.3,
+              pointRadius: 0,
+              borderWidth: 2.5,
+              spanGaps: true,
+            },
+            {
+              label: "Weight (kg)",
+              data,
+              borderColor: "rgba(37,99,235,0.35)",
+              backgroundColor: "rgba(37,99,235,0.05)",
+              tension: 0.2,
+              pointRadius: 2,
+              borderWidth: 1,
+            },
+          ],
         },
         options: baseOptions("kg"),
       });
