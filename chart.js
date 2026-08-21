@@ -35,6 +35,31 @@
   const chartTextColor = () =>
     getComputedStyle(document.documentElement).getPropertyValue("--fg").trim() || "#1a1a1a";
 
+  const MS_PER_DAY = 86400000;
+  const toTs = (d) => new Date(d + "T00:00:00").getTime();
+  const fmtDay = (ts) => {
+    const d = new Date(ts);
+    return `${d.getDate()} ${d.toLocaleString(undefined, { month: "short" })}`;
+  };
+
+  // Linear x axis in ms-since-epoch with one tick per calendar day, so gaps
+  // between entries show as real gaps. Avoids needing a Chart.js date adapter.
+  function dailyTimeAxis(fg, minTs, maxTs) {
+    return {
+      type: "linear",
+      min: minTs,
+      max: maxTs,
+      ticks: {
+        color: fg,
+        stepSize: MS_PER_DAY,
+        autoSkip: true,
+        maxRotation: 60,
+        callback: (v) => fmtDay(v),
+      },
+      grid: { color: "rgba(128,128,128,0.15)" },
+    };
+  }
+
   function baseOptions(yLabel) {
     const fg = chartTextColor();
     return {
@@ -60,8 +85,7 @@
   // window (rather than a fixed number of points) keeps the average honest
   // when there are gaps between weigh-ins.
   function trailingMovingAverage(dates, values, windowDays) {
-    const MS_PER_DAY = 86400000;
-    const ts = dates.map((d) => new Date(d + "T00:00:00").getTime());
+    const ts = dates.map(toTs);
     return values.map((_, i) => {
       const cutoff = ts[i] - (windowDays - 1) * MS_PER_DAY;
       let sum = 0, n = 0;
@@ -85,14 +109,18 @@
       }
       const AVG_DAYS = 7;
       const avg = trailingMovingAverage(labels, data, AVG_DAYS);
+      const ts = labels.map(toTs);
+      const points = (arr) => arr.map((y, i) => ({ x: ts[i], y }));
+      const opts = baseOptions("kg");
+      opts.scales.x = dailyTimeAxis(chartTextColor(), ts[0], ts[ts.length - 1]);
+      opts.plugins.tooltip = { callbacks: { title: (items) => fmtDay(items[0].parsed.x) } };
       new Chart($("weight-chart"), {
         type: "line",
         data: {
-          labels,
           datasets: [
             {
               label: `${AVG_DAYS}-day average (kg)`,
-              data: avg,
+              data: points(avg),
               borderColor: "#2563eb",
               backgroundColor: "rgba(37,99,235,0.1)",
               tension: 0.3,
@@ -102,7 +130,7 @@
             },
             {
               label: "Weight (kg)",
-              data,
+              data: points(data),
               borderColor: "rgba(37,99,235,0.35)",
               backgroundColor: "rgba(37,99,235,0.05)",
               tension: 0.2,
@@ -111,7 +139,7 @@
             },
           ],
         },
-        options: baseOptions("kg"),
+        options: opts,
       });
     } catch (e) {
       $("weight-status").textContent = `Failed: ${e.message}`;
