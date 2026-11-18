@@ -25,3 +25,17 @@
     - seated_db_ohp
     - lateral_raise
     - face_pull
+- slug: full_body_a
+  name: Full Body A (Deadlift)
+  exercises:
+    - deadlift
+    - bench_press
+    - barbell_row
+    - pull_up
+- slug: full_body_b
+  name: Full Body B (Squat)
+  exercises:
+    - squat
+    - bench_press
+    - barbell_row
+    - overhead_press
